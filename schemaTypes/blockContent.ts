@@ -1,4 +1,4 @@
-import {defineArrayMember, defineType} from 'sanity'
+import {defineArrayMember, defineType, defineField} from 'sanity'
 
 /**
  * This is the schema definition for the rich text fields used for
@@ -52,20 +52,40 @@ export default defineType({
         ],
       },
     }),
-    // You can add additional types here. Note that you need to
-    // correspond the id to the component filename.
-    // Example: allow editors to add images directly into rich text fields:
-    // defineArrayMember({
-    //   type: 'image',
-    //   options: {hotspot: true},
-    //   fields: [
-    //     defineField({
-    //       name: 'alt',
-    //       type: 'string',
-    //       title: 'Alternative Text',
-    //       validation: Rule => Rule.required()
-    //     })
-    //   ]
-    // }),
+    // Custom image component for inline images
+    defineArrayMember({
+      type: 'image',
+      name: 'inlineImage',
+      title: 'Inline Image',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative Text',
+          description: 'Important for accessibility and SEO',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+          description: 'Optional caption to display below the image'
+        }),
+        defineField({
+          name: 'enableOverflow',
+          type: 'boolean',
+          title: 'Enable Overflow Scrolling',
+          description: 'Enable this for wide images that should maintain their natural size and allow horizontal scrolling',
+          initialValue: false
+        })
+      ]
+    }),
+    // YouTube video embed
+    defineArrayMember({
+      type: 'youtube',
+      name: 'youtubeEmbed',
+      title: 'YouTube Video',
+    }),
   ],
 }) 

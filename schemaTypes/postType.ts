@@ -27,8 +27,7 @@ export const postType = defineType({
     defineField({
       name: 'content',
       title: 'Content',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'blockContent',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -38,6 +37,13 @@ export const postType = defineType({
       options: {
         hotspot: true,
       },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'coverImageAlt',
+      title: 'Cover Image Alt Text',
+      type: 'string',
+      description: 'Alternative text for the cover image (important for accessibility)',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -66,6 +72,20 @@ export const postType = defineType({
       name: 'category',
       title: 'Category',
       type: 'string',
+      options: {
+
+        // LENA: add more blog post categories here
+        list: [
+          {title: 'Puppy', value: 'puppy'},
+          {title: 'Senior Dog', value: 'senior-dog'},
+          {title: 'Physical Conditioning', value: 'physical-conditioning'},
+          {title: 'Recovery/Rehabilitation', value: 'recovery-rehabilitation'},
+          {title: 'Mental Stimulation', value: 'mental-stimulation'},
+          {title: 'Supplements', value: 'supplements'},
+        ],
+
+        layout: 'dropdown',
+      },
       validation: (rule) => rule.required(),
     }),
     defineField({
