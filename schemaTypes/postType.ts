@@ -23,8 +23,9 @@ export const postType = defineType({
       title: 'Excerpt',
       type: 'text',
       rows: 3,
-      description: 'Brief description of the post (140-280 characters)',
-      validation: Rule => Rule.required().min(140).max(280)
+      description: 'Brief description of the post (Aim for 120-158 characters)',
+      validation: Rule => Rule.required().min(120).max(158)
+      // add a character count to the field
     }),
     defineField({
       name: 'content',
@@ -75,18 +76,8 @@ export const postType = defineType({
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Puppy Training', value: 'puppy'},
-          {title: 'Senior Dog', value: 'senior-dog'},
-          {title: 'Physical Conditioning', value: 'physical-conditioning'},
-          {title: 'Recovery/Rehabilitation', value: 'recovery-rehabilitation'},
-          {title: 'Mental Stimulation', value: 'mental-stimulation'},
-          {title: 'Supplements', value: 'supplements'},
-        ],
-        layout: 'dropdown',
-      },
+      type: 'reference',
+      to: [{type: 'category'}],
       validation: Rule => Rule.required()
     }),
     defineField({
@@ -104,6 +95,9 @@ export const postType = defineType({
       description: 'Custom meta description for SEO (max 160 characters)',
       validation: Rule => Rule.max(160)
     }),
+
+    // TODO: Add field for featured post by category
+
     defineField({
       name: 'featured',
       title: 'Featured Post',
@@ -125,12 +119,13 @@ export const postType = defineType({
       subtitle: 'excerpt',
       media: 'coverImage',
       authorName: 'author.name',
+      categoryTitle: 'category.title',
       language: 'language'
     },
-    prepare({title, subtitle, media, authorName, language}) {
+    prepare({title, subtitle, media, authorName, categoryTitle, language}) {
       return {
         title: `${title} ${language ? `(${language.toUpperCase()})` : ''}`,
-        subtitle: `${authorName ? `By ${authorName}` : ''} - ${subtitle}`,
+        subtitle: `${categoryTitle ? `[${categoryTitle}] ` : ''}${authorName ? `By ${authorName}` : ''} - ${subtitle}`,
         media,
       }
     },

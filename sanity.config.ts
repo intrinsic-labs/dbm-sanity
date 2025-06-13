@@ -27,6 +27,9 @@ export default defineConfig({
             S.listItem()
               .title('Authors')
               .child(S.documentTypeList('author')),
+            S.listItem()
+              .title('Categories')
+              .child(S.documentTypeList('category')),
             S.divider(),
             S.listItem()
               .title('All Posts (All Languages)')
@@ -37,6 +40,7 @@ export default defineConfig({
     documentInternationalization({
       supportedLanguages: [
         {id: 'en', title: 'English'},
+        {id: 'uk', title: 'English (UK)'},
         {id: 'de', title: 'German'},
         {id: 'fr', title: 'French'},
         {id: 'es', title: 'Spanish'},
