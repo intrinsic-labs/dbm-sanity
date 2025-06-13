@@ -29,11 +29,18 @@ export default defineConfig({
               .child(S.documentTypeList('author')),
             S.listItem()
               .title('Categories')
-              .child(S.documentTypeList('category')),
+              .child(
+                S.documentList()
+                  .title('Categories (English)')
+                  .filter('_type == "category" && language == "en"')
+              ),
             S.divider(),
             S.listItem()
               .title('All Posts (All Languages)')
               .child(S.documentTypeList('post')),
+            S.listItem()
+              .title('All Categories (All Languages)')
+              .child(S.documentTypeList('category')),
           ])
     }),
     visionTool(),
@@ -46,7 +53,7 @@ export default defineConfig({
         {id: 'es', title: 'Spanish'},
         {id: 'it', title: 'Italian'}
       ],
-      schemaTypes: ['post'],
+      schemaTypes: ['post', 'category'],
       languageField: 'language'
     })
   ],

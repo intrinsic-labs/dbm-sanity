@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {isUniquePerLanguage} from '../lib/isUniquePerLanguage'
 
 export const categoryType = defineType({
   name: 'category',
@@ -16,7 +17,10 @@ export const categoryType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {
+        source: 'title',
+        isUnique: isUniquePerLanguage
+      },
       description: 'URL-friendly version of the category name',
       validation: Rule => Rule.required()
     }),
@@ -27,15 +31,24 @@ export const categoryType = defineType({
       rows: 3,
       description: 'Brief description of what this category covers'
     }),
+    // IMPORTANT: Language field managed by internationalization plugin
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true
+    })
   ],
   preview: {
     select: {
       title: 'title',
-      subtitle: 'description'
+      subtitle: 'description',
+      language: 'language'
     },
-    prepare({title, subtitle}) {
+    prepare({title, subtitle, language}) {
       return {
-        title,
+        title: `${title} ${language ? `(${language.toUpperCase()})` : ''}`,
         subtitle
       }
     }

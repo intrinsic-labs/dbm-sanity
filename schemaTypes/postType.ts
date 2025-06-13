@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {isUniquePerLanguage} from '../lib/isUniquePerLanguage'
 
 export const postType = defineType({
   name: 'post',
@@ -15,7 +16,10 @@ export const postType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {
+        source: 'title',
+        isUnique: isUniquePerLanguage
+      },
       validation: Rule => Rule.required()
     }),
     defineField({
@@ -74,11 +78,14 @@ export const postType = defineType({
       description: 'Track content freshness for SEO'
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'reference',
-      to: [{type: 'category'}],
-      validation: Rule => Rule.required()
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [{
+        type: 'reference',
+        to: [{type: 'category'}]
+      }],
+      validation: Rule => Rule.required().min(1).max(5).error('Please select at least 1 category and no more than 5')
     }),
     defineField({
       name: 'tags',
@@ -96,13 +103,19 @@ export const postType = defineType({
       validation: Rule => Rule.max(160)
     }),
 
-    // TODO: Add field for featured post by category
-
     defineField({
       name: 'featured',
-      title: 'Featured Post',
+      title: 'Sitewide Featured Post',
       type: 'boolean',
-      initialValue: false
+      initialValue: false,
+      description: 'Feature this post across the site'
+    }),
+    defineField({
+      name: 'featuredCategory',
+      title: 'Featured in Category',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Feature this post by listing it at the top of all posts in its first category'
     }),
     // IMPORTANT: Language field managed by internationalization plugin
     defineField({
@@ -119,13 +132,16 @@ export const postType = defineType({
       subtitle: 'excerpt',
       media: 'coverImage',
       authorName: 'author.name',
-      categoryTitle: 'category.title',
+      categories: 'categories',
       language: 'language'
     },
-    prepare({title, subtitle, media, authorName, categoryTitle, language}) {
+    prepare({title, subtitle, media, authorName, categories, language}) {
+      const categoryTitles = categories?.map((cat: any) => cat.title).filter(Boolean) || []
+      const categoryString = categoryTitles.length > 0 ? `[${categoryTitles.join(', ')}] ` : ''
+      
       return {
         title: `${title} ${language ? `(${language.toUpperCase()})` : ''}`,
-        subtitle: `${categoryTitle ? `[${categoryTitle}] ` : ''}${authorName ? `By ${authorName}` : ''} - ${subtitle}`,
+        subtitle: `${categoryString}${authorName ? `By ${authorName}` : ''} - ${subtitle}`,
         media,
       }
     },
