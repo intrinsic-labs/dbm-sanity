@@ -1,6 +1,7 @@
 import {authorType} from './authorType'
 import {categoryType} from './categoryType'
 import {postType} from './postType'
+import {organizationType} from './organizationType'
 import blockContent from './blockContent'
 import {youtubeType} from './youtubeType'
 
@@ -13,6 +14,7 @@ export const schemaTypes = [
   authorType,
   categoryType,
   postType,
+  organizationType,
   // Object types (used within documents)
   blockContent,
   youtubeType,

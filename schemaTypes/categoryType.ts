@@ -29,7 +29,36 @@ export const categoryType = defineType({
       title: 'Description',
       type: 'text',
       rows: 3,
-      description: 'Brief description of what this category covers'
+      description: 'SEO-optimized description of this category'
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
+      rows: 2,
+      description: 'Custom meta description for category pages',
+      validation: Rule => Rule.max(158)
+    }),
+    defineField({
+      name: 'featuredImage',
+      title: 'Featured Image',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          validation: Rule => Rule.required()
+        }
+      ]
+    }),
+    defineField({
+      name: 'parent',
+      title: 'Parent Category',
+      type: 'reference',
+      to: [{type: 'category'}],
+      description: 'Creates hierarchical category structure'
     }),
     // IMPORTANT: Language field managed by internationalization plugin
     defineField({
@@ -44,12 +73,14 @@ export const categoryType = defineType({
     select: {
       title: 'title',
       subtitle: 'description',
+      media: 'featuredImage',
       language: 'language'
     },
-    prepare({title, subtitle, language}) {
+    prepare({title, subtitle, media, language}) {
       return {
         title: `${title} ${language ? `(${language.toUpperCase()})` : ''}`,
-        subtitle
+        subtitle,
+        media
       }
     }
   }

@@ -18,6 +18,9 @@ export default defineConfig({
           .title('Content')
           .items([
             S.listItem()
+              .title('Organization')
+              .child(S.document().schemaType('organization').documentId('organization')),
+            S.listItem()
               .title('Blog Posts')
               .child(
                 S.documentList()
