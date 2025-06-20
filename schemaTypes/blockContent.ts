@@ -47,12 +47,18 @@ export default defineType({
                 type: 'url',
                 validation: Rule => Rule.uri({allowRelative: true})
               },
+              {
+                title: 'Open in new tab',
+                name: 'blank',
+                type: 'boolean',
+                initialValue: false
+              }
             ],
           },
         ],
       },
     }),
-    // Custom image component for inline images
+    // Enhanced image component for inline images
     defineArrayMember({
       type: 'image',
       name: 'inlineImage',
@@ -63,21 +69,43 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative Text',
-          description: 'Important for accessibility and SEO',
-          validation: Rule => Rule.required()
+          description: 'Describe the image for accessibility and SEO (required)',
+          validation: Rule => Rule.required().min(10).max(125).warning('Alt text should be 10-125 characters for optimal SEO')
         }),
         defineField({
           name: 'caption',
           type: 'string',
           title: 'Caption',
-          description: 'Optional caption to display below the image'
+          description: 'Optional caption displayed below the image',
+          validation: Rule => Rule.max(200)
         }),
         defineField({
-          name: 'enableOverflow',
-          type: 'boolean',
-          title: 'Enable Overflow Scrolling',
-          description: 'Enable this for wide images that should maintain their natural size and allow horizontal scrolling',
-          initialValue: false
+          name: 'loading',
+          type: 'string',
+          title: 'Loading Behavior',
+          description: 'How the image should be loaded',
+          options: {
+            list: [
+              {title: 'Lazy (default)', value: 'lazy'},
+              {title: 'Eager (above fold)', value: 'eager'}
+            ]
+          },
+          initialValue: 'lazy'
+        }),
+        defineField({
+          name: 'size',
+          type: 'string',
+          title: 'Display Size',
+          description: 'How large should this image appear?',
+          options: {
+            list: [
+              {title: 'Full Width (default)', value: 'full'},
+              {title: 'Large (75%)', value: 'large'},
+              {title: 'Medium (50%)', value: 'medium'},
+              {title: 'Small (25%)', value: 'small'}
+            ]
+          },
+          initialValue: 'full'
         })
       ]
     }),

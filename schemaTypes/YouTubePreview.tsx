@@ -1,72 +1,48 @@
 import type {PreviewProps} from 'sanity'
-import {Flex, Text, Button, Card, Stack} from '@sanity/ui'
-import {EditIcon} from '@sanity/icons'
-import ReactPlayer from 'react-player/youtube'
-import {useState} from 'react'
+import {Text, Card, Stack} from '@sanity/ui'
 
 export function YouTubePreview(props: PreviewProps) {
   // The props come from the prepare function in youtubeType.ts
-  const {title, subtitle: url, renderDefault} = props
-  const [showEdit, setShowEdit] = useState(false)
+  const {title, subtitle: url} = props
   
-  console.log('YouTubePreview props:', props) // Debug logging
-
   // Safely convert props to strings
   const titleString = title ? String(title) : undefined
   const urlString = url ? String(url) : undefined
 
-  if (showEdit && renderDefault) {
-    return (
-      <Card padding={3}>
-        <Stack space={3}>
-          <Flex justify="space-between" align="center">
-            <Text weight="medium">Edit YouTube Video</Text>
-            <Button
-              icon={EditIcon}
-              mode="ghost"
-              text="Done"
-              onClick={() => setShowEdit(false)}
-            />
-          </Flex>
-          {renderDefault(props)}
-        </Stack>
-      </Card>
-    )
+  const getYouTubeId = (url: string): string | null => {
+    const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/
+    const match = url?.match(regex)
+    return match ? match[1] : null
   }
+
+  const videoId = urlString ? getYouTubeId(urlString) : null
 
   return (
     <Card padding={3}>
       <Stack space={3}>
-        <Flex justify="space-between" align="center">
-          <Text weight="medium" size={1}>
-            {titleString || 'YouTube Video'}
-          </Text>
-          <Button
-            icon={EditIcon}
-            mode="ghost"
-            text="Edit"
-            onClick={() => setShowEdit(true)}
-          />
-        </Flex>
+        <Text weight="medium" size={1}>
+          {titleString ? `${titleString} (Override)` : 'YouTube Video'}
+        </Text>
         
-        {typeof urlString === 'string' && urlString && (urlString.includes('youtube.com') || urlString.includes('youtu.be')) ? (
+        {videoId ? (
           <div style={{ 
             position: 'relative', 
             width: '100%', 
             paddingBottom: '56.25%', // 16:9 aspect ratio
             height: 0,
-            overflow: 'hidden'
+            overflow: 'hidden',
+            borderRadius: '4px'
           }}>
-            <ReactPlayer 
-              url={urlString} 
-              width="100%" 
-              height="100%"
-              style={{ position: 'absolute', top: 0, left: 0 }}
-              config={{
-                playerVars: { 
-                  showinfo: 1,
-                  modestbranding: 1
-                }
+            <img
+              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+              alt="Video thumbnail"
+              style={{ 
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%', 
+                height: '100%',
+                objectFit: 'cover'
               }}
             />
           </div>
@@ -81,6 +57,16 @@ export function YouTubePreview(props: PreviewProps) {
             {urlString}
           </Text>
         )}
+
+        <div style={{ 
+          fontSize: '12px', 
+          color: '#666',
+          padding: '8px',
+          backgroundColor: '#f0f8ff',
+          borderRadius: '4px'
+        }}>
+          Video title, duration, and metadata are automatically fetched in the frontend for SEO schema markup
+        </div>
       </Stack>
     </Card>
   )
