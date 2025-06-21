@@ -139,7 +139,6 @@ export const authorType = defineType({
             name: 'degree',
             title: 'Degree',
             type: 'string',
-            validation: Rule => Rule.required()
           },
           {
             name: 'field',
@@ -236,12 +235,6 @@ export const authorType = defineType({
       type: 'email',
       group: 'social',
       description: 'Professional email address'
-    }),
-    defineField({
-      name: 'website',
-      title: 'Personal Website',
-      type: 'url',
-      group: 'social'
     }),
     defineField({
       name: 'socialLinks',
