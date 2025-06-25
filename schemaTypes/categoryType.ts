@@ -9,34 +9,32 @@ export const categoryType = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
-      description: 'Display name for the category',
+      type: 'internationalizedArrayString',
+      description: 'Display name for the category (localized)',
       validation: Rule => Rule.required()
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
-      type: 'slug',
+      type: 'internationalizedArraySlug',
       options: {
         source: 'title',
         isUnique: isUniquePerLanguage
       },
-      description: 'URL-friendly version of the category name',
+      description: 'URL-friendly version of the category name (localized)',
       validation: Rule => Rule.required()
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
-      description: 'SEO-optimized description of this category'
+      type: 'internationalizedArrayText',
+      description: 'SEO-optimized description of this category (localized)'
     }),
     defineField({
       name: 'metaDescription',
       title: 'Meta Description',
-      type: 'text',
-      rows: 2,
-      description: 'Custom meta description for category pages',
+      type: 'internationalizedArrayText',
+      description: 'Custom meta description for category pages (localized)',
       validation: Rule => Rule.max(158)
     }),
     defineField({
@@ -47,7 +45,7 @@ export const categoryType = defineType({
       fields: [
         {
           name: 'alt',
-          type: 'string',
+          type: 'internationalizedArrayString',
           title: 'Alt Text',
           validation: Rule => Rule.required()
         }

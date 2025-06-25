@@ -20,8 +20,7 @@ export const organizationType = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 4,
+      type: 'internationalizedArrayText',
       validation: Rule => Rule.required()
     }),
     defineField({
@@ -32,7 +31,7 @@ export const organizationType = defineType({
       fields: [
         {
           name: 'alt',
-          type: 'string',
+          type: 'internationalizedArrayString',
           title: 'Alt Text',
           validation: Rule => Rule.required()
         }

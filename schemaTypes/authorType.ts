@@ -57,17 +57,16 @@ export const authorType = defineType({
     defineField({
       name: 'bio',
       title: 'Bio',
-      type: 'text',
+      type: 'internationalizedArrayText',
       group: 'basic',
-      rows: 4,
-      description: 'Author biography for display'
+      description: 'Author biography for display (localized)'
     }),
     defineField({
       name: 'jobTitle',
       title: 'Job Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       group: 'basic',
-      description: 'Current professional title'
+      description: 'Current professional title (localized)'
     }),
     
     // ===== CREDENTIALS & E-E-A-T =====
@@ -214,11 +213,9 @@ export const authorType = defineType({
     defineField({
       name: 'specialties',
       title: 'Areas of Expertise',
-      type: 'array',
+      type: 'internationalizedArrayString',
       group: 'credentials',
-      of: [{type: 'string'}],
-      description: 'Specific areas of expertise for knowsAbout schema',
-      options: {layout: 'tags'}
+      description: 'Specific areas of expertise for knowsAbout schema (localized)'
     }),
     defineField({
       name: 'yearsExperience',
