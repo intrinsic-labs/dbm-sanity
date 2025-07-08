@@ -111,7 +111,7 @@ export const organizationType = defineType({
   preview: {
     select: {
       title: 'name',
-      subtitle: 'description',
+      // subtitle: 'description',
       media: 'logo'
     }
   }
