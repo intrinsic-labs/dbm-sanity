@@ -57,27 +57,22 @@ export const categoryType = defineType({
       type: 'reference',
       to: [{type: 'category'}],
       description: 'Creates hierarchical category structure'
-    }),
-    // IMPORTANT: Language field managed by internationalization plugin
-    defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      readOnly: true,
-      hidden: true
     })
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'description',
-      media: 'featuredImage',
-      language: 'language'
+      media: 'featuredImage'
     },
-    prepare({title, subtitle, media, language}) {
+    prepare({title, subtitle, media}) {
+      // Extract English title from internationalized array
+      const englishTitle = title?.find((item: any) => item._key === 'en')?.value || 'Untitled'
+      const englishSubtitle = subtitle?.find((item: any) => item._key === 'en')?.value
+      
       return {
-        title: `${title} ${language ? `(${language.toUpperCase()})` : ''}`,
-        subtitle,
+        title: englishTitle,
+        subtitle: englishSubtitle,
         media
       }
     }
