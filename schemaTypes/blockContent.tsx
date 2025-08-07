@@ -1,4 +1,11 @@
 import {defineArrayMember, defineType, defineField} from 'sanity'
+import React from 'react'
+
+// Decorators for superscript and subscript
+const SuperIcon = () => <div>x<sup>2</sup></div>
+const SuperDecorator = (props: any) => <sup>{props.children}</sup>
+const SubIcon = () => <div>x<sub>2</sub></div>
+const SubDecorator = (props: any) => <sub>{props.children}</sub>
 
 /**
  * This is the schema definition for the rich text fields used for
@@ -33,6 +40,8 @@ export default defineType({
           {title: 'Code', value: 'code'},
           {title: 'Underline', value: 'underline'},
           {title: 'Strike', value: 'strike-through'},
+          { title: "Sub", value: 'sub', icon: SubIcon, component: SubDecorator },
+          { title: "Super", value: 'super', icon: SuperIcon, component: SuperDecorator },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
