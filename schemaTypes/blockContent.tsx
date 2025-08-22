@@ -64,6 +64,36 @@ export default defineType({
               }
             ],
           },
+
+          {
+            name: 'internalLink',
+            type: 'object',
+            title: 'Internal link',
+            icon: () => 'IL', // Or use custom icon
+            fields: [
+              {
+                name: 'reference',
+                type: 'reference',
+                title: 'Reference',
+                to: [
+                  { type: 'post' },
+                ],
+                options: {
+                  // This ensures you can only link to documents
+                  // that have translations set up
+                  filter: ({ document }) => {
+                    // Optional: filter to only show documents in the same language
+                    return {
+                      filter: 'language == $language',
+                      params: {
+                        language: document.language
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
         ],
       },
     }),

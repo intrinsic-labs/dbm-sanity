@@ -235,25 +235,25 @@ export const postType = defineType({
       options: {layout: 'tags'},
       validation: Rule => Rule.max(10)
     }),
-    defineField({
-      name: 'targetAudience',
-      title: 'Target Audience',
-      type: 'array',
-      group: 'seo',
-      of: [{type: 'string'}],
-      options: {
-        list: [
-          {title: 'New Dog Owners', value: 'new-owners'},
-          {title: 'Experienced Dog Owners', value: 'experienced-owners'},
-          {title: 'Puppy Parents', value: 'puppy-parents'},
-          {title: 'Senior Dog Owners', value: 'senior-dog-owners'},
-          {title: 'Professional Trainers', value: 'trainers'},
-          {title: 'Veterinarians', value: 'vets'},
-          {title: 'Breed Specific', value: 'breed-specific'},
-          {title: 'General Pet Lovers', value: 'general'}
-        ]
-      }
-    }),
+    // defineField({
+    //   name: 'targetAudience',
+    //   title: 'Target Audience',
+    //   type: 'array',
+    //   group: 'seo',
+    //   of: [{type: 'string'}],
+    //   options: {
+    //     list: [
+    //       {title: 'New Dog Owners', value: 'new-owners'},
+    //       {title: 'Experienced Dog Owners', value: 'experienced-owners'},
+    //       {title: 'Puppy Parents', value: 'puppy-parents'},
+    //       {title: 'Senior Dog Owners', value: 'senior-dog-owners'},
+    //       {title: 'Professional Trainers', value: 'trainers'},
+    //       {title: 'Veterinarians', value: 'vets'},
+    //       {title: 'Breed Specific', value: 'breed-specific'},
+    //       {title: 'General Pet Lovers', value: 'general'}
+    //     ]
+    //   }
+    // }),
     
     // ===== FAQ SCHEMA SUPPORT =====
     defineField({
