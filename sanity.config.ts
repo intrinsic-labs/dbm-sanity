@@ -39,6 +39,9 @@ export default defineConfig({
             S.listItem()
               .title('All Posts (All Languages)')
               .child(S.documentTypeList('post')),
+            S.listItem()
+              .title('Infographics')
+              .child(S.documentTypeList('infographic')),
           ])
     }),
     visionTool(),
