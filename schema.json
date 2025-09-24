@@ -219,13 +219,6 @@
                             },
                             "optional": true
                           },
-                          "linkText": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string"
-                            },
-                            "optional": false
-                          },
                           "blank": {
                             "type": "objectAttribute",
                             "value": {
