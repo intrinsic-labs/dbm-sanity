@@ -2,9 +2,17 @@ import {defineArrayMember, defineType, defineField} from 'sanity'
 import React from 'react'
 
 // Decorators for superscript and subscript
-const SuperIcon = () => <div>x<sup>2</sup></div>
+const SuperIcon = () => (
+  <div>
+    x<sup>2</sup>
+  </div>
+)
 const SuperDecorator = (props: any) => <sup>{props.children}</sup>
-const SubIcon = () => <div>x<sub>2</sub></div>
+const SubIcon = () => (
+  <div>
+    x<sub>2</sub>
+  </div>
+)
 const SubDecorator = (props: any) => <sub>{props.children}</sub>
 
 /**
@@ -30,7 +38,10 @@ export default defineType({
         {title: 'H4', value: 'h4'},
         {title: 'Quote', value: 'blockquote'},
       ],
-      lists: [{title: 'Bullet', value: 'bullet'}, {title: 'Number', value: 'number'}],
+      lists: [
+        {title: 'Bullet', value: 'bullet'},
+        {title: 'Number', value: 'number'},
+      ],
       // Marks let you mark up inline text in the block editor
       marks: {
         // Decorators usually describe a single property – e.g. emphasis or code
@@ -40,8 +51,8 @@ export default defineType({
           {title: 'Code', value: 'code'},
           {title: 'Underline', value: 'underline'},
           {title: 'Strike', value: 'strike-through'},
-          { title: "Sub", value: 'sub', icon: SubIcon, component: SubDecorator },
-          { title: "Super", value: 'super', icon: SuperIcon, component: SuperDecorator },
+          {title: 'Sub', value: 'sub', icon: SubIcon, component: SubDecorator},
+          {title: 'Super', value: 'super', icon: SuperIcon, component: SuperDecorator},
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
@@ -54,14 +65,14 @@ export default defineType({
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-                validation: Rule => Rule.uri({allowRelative: true})
+                validation: (Rule) => Rule.uri({allowRelative: true}),
               },
               {
                 title: 'Open in new tab',
                 name: 'blank',
                 type: 'boolean',
-                initialValue: false
-              }
+                initialValue: false,
+              },
             ],
           },
 
@@ -75,25 +86,23 @@ export default defineType({
                 name: 'reference',
                 type: 'reference',
                 title: 'Reference',
-                to: [
-                  { type: 'post' },
-                ],
+                to: [{type: 'post'}],
                 options: {
                   // This ensures you can only link to documents
                   // that have translations set up
-                  filter: ({ document }) => {
+                  filter: ({document}) => {
                     // Optional: filter to only show documents in the same language
                     return {
                       filter: 'language == $language',
                       params: {
-                        language: document.language
-                      }
+                        language: document.language,
+                      },
                     }
-                  }
-                }
-              }
-            ]
-          }
+                  },
+                },
+              },
+            ],
+          },
         ],
       },
     }),
@@ -109,14 +118,18 @@ export default defineType({
           type: 'string',
           title: 'Alternative Text',
           description: 'Describe the image for accessibility and SEO (required)',
-          validation: Rule => Rule.required().min(10).max(125).warning('Alt text should be 10-125 characters for optimal SEO')
+          validation: (Rule) =>
+            Rule.required()
+              .min(10)
+              .max(125)
+              .warning('Alt text should be 10-125 characters for optimal SEO'),
         }),
         defineField({
           name: 'caption',
           type: 'string',
           title: 'Caption',
           description: 'Optional caption displayed below the image',
-          validation: Rule => Rule.max(200)
+          validation: (Rule) => Rule.max(200),
         }),
         defineField({
           name: 'loading',
@@ -126,10 +139,10 @@ export default defineType({
           options: {
             list: [
               {title: 'Lazy (default)', value: 'lazy'},
-              {title: 'Eager (above fold)', value: 'eager'}
-            ]
+              {title: 'Eager (above fold)', value: 'eager'},
+            ],
           },
-          initialValue: 'lazy'
+          initialValue: 'lazy',
         }),
         defineField({
           name: 'size',
@@ -141,12 +154,36 @@ export default defineType({
               {title: 'Full Width (default)', value: 'full'},
               {title: 'Large (75%)', value: 'large'},
               {title: 'Medium (50%)', value: 'medium'},
-              {title: 'Small (25%)', value: 'small'}
-            ]
+              {title: 'Small (25%)', value: 'small'},
+            ],
           },
-          initialValue: 'full'
-        })
-      ]
+          initialValue: 'full',
+        }),
+      ],
+    }),
+    // Infographic reference
+    defineArrayMember({
+      type: 'reference',
+      name: 'infographicReference',
+      title: 'Infographic',
+      to: [{type: 'infographic'}],
+      options: {
+        // Filter infographics that have content in the current document's language
+        filter: ({document}) => {
+          if (document?.language) {
+            return {
+              filter: `count(title[language == $language]) > 0`,
+              params: {
+                language: document.language,
+              },
+            }
+          }
+          // Fallback: show infographics that have English content
+          return {
+            filter: `count(title[language == "en"]) > 0`,
+          }
+        },
+      },
     }),
     // YouTube video embed
     defineArrayMember({
@@ -155,4 +192,4 @@ export default defineType({
       title: 'YouTube Video',
     }),
   ],
-}) 
+})

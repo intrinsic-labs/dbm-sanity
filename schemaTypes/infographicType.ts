@@ -309,6 +309,155 @@ export const infographicType = defineType({
       ],
       validation: (Rule) => Rule.required().min(1),
     }),
+
+    defineField({
+      name: 'downloadFilename',
+      title: 'Download Filename',
+      type: 'array',
+      description: 'Custom filename for PDF downloads (without extension)',
+      of: [
+        {
+          type: 'object',
+          name: 'localizedFilename',
+          fields: [
+            {
+              name: 'language',
+              title: 'Language',
+              type: 'string',
+              options: {
+                list: supportedLanguages.map((lang) => ({
+                  title: lang.title,
+                  value: lang.id,
+                })),
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'value',
+              title: 'Filename',
+              type: 'string',
+              description: 'Filename without extension (e.g., "dog-nutrition-guide-2024")',
+              validation: (Rule) =>
+                Rule.required()
+                  .min(3)
+                  .max(100)
+                  .regex(/^[a-zA-Z0-9-_]+$/, {
+                    name: 'alphanumeric with hyphens and underscores',
+                    invert: false,
+                  }),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'value',
+              subtitle: 'language',
+            },
+            prepare({title, subtitle}) {
+              const lang = supportedLanguages.find((l) => l.id === subtitle)
+              return {
+                title: title || 'No filename',
+                subtitle: lang?.title || subtitle,
+              }
+            },
+          },
+        },
+      ],
+      validation: (Rule) =>
+        Rule.custom((array) => {
+          if (!array || array.length === 0) return true // Optional field
+
+          const languages = array.map((item: any) => item.language)
+          const uniqueLanguages = new Set(languages)
+
+          if (languages.length !== uniqueLanguages.size) {
+            return 'Each language can only be used once'
+          }
+
+          return true
+        }),
+    }),
+
+    defineField({
+      name: 'pdfMetadata',
+      title: 'PDF Metadata',
+      type: 'array',
+      description: 'Metadata for generated PDF files',
+      of: [
+        {
+          type: 'object',
+          name: 'localizedPdfMetadata',
+          fields: [
+            {
+              name: 'language',
+              title: 'Language',
+              type: 'string',
+              options: {
+                list: supportedLanguages.map((lang) => ({
+                  title: lang.title,
+                  value: lang.id,
+                })),
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'title',
+              title: 'PDF Title',
+              type: 'string',
+              description: 'Title embedded in PDF metadata',
+              validation: (Rule) => Rule.max(200),
+            },
+            {
+              name: 'keywords',
+              title: 'Keywords',
+              type: 'string',
+              description: 'Comma-separated keywords for PDF metadata',
+              validation: (Rule) => Rule.max(500),
+            },
+            {
+              name: 'author',
+              title: 'Author',
+              type: 'string',
+              description: 'Author name for PDF metadata',
+              initialValue: 'Dog Body Mind',
+              validation: (Rule) => Rule.max(100),
+            },
+            {
+              name: 'subject',
+              title: 'Subject',
+              type: 'string',
+              description: 'Brief subject description for PDF metadata',
+              validation: (Rule) => Rule.max(300),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'language',
+            },
+            prepare({title, subtitle}) {
+              const lang = supportedLanguages.find((l) => l.id === subtitle)
+              return {
+                title: title || 'No PDF title',
+                subtitle: lang?.title || subtitle,
+              }
+            },
+          },
+        },
+      ],
+      validation: (Rule) =>
+        Rule.custom((array) => {
+          if (!array || array.length === 0) return true // Optional field
+
+          const languages = array.map((item: any) => item.language)
+          const uniqueLanguages = new Set(languages)
+
+          if (languages.length !== uniqueLanguages.size) {
+            return 'Each language can only be used once'
+          }
+
+          return true
+        }),
+    }),
   ],
 
   preview: {
