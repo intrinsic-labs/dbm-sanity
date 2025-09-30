@@ -1,5 +1,6 @@
 import {defineArrayMember, defineType, defineField} from 'sanity'
 import React from 'react'
+import {blockquoteStyles} from '../lib/blockquote-styles'
 
 // Decorators for superscript and subscript
 const SuperIcon = () => (
@@ -14,6 +15,67 @@ const SubIcon = () => (
   </div>
 )
 const SubDecorator = (props: any) => <sub>{props.children}</sub>
+
+// Custom block style renderers for visual feedback in Sanity Studio
+const PushpinStyle = (props: any) => (
+  <div style={{
+    borderLeft: `4px solid ${blockquoteStyles.pushpin.borderColor}`,
+    backgroundColor: blockquoteStyles.pushpin.backgroundColor,
+    padding: '12px 16px',
+    borderRadius: '0 8px 8px 0',
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'start'
+  }}>
+    <span style={{fontSize: '1.5em'}}>{blockquoteStyles.pushpin.emoji}</span>
+    <div style={{flex: 1}}>{props.children}</div>
+  </div>
+)
+
+const WarningStyle = (props: any) => (
+  <div style={{
+    borderLeft: `4px solid ${blockquoteStyles.warning.borderColor}`,
+    backgroundColor: blockquoteStyles.warning.backgroundColor,
+    padding: '12px 16px',
+    borderRadius: '0 8px 8px 0',
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'start'
+  }}>
+    <span style={{fontSize: '1.5em'}}>{blockquoteStyles.warning.emoji}</span>
+    <div style={{flex: 1}}>{props.children}</div>
+  </div>
+)
+
+const DangerStyle = (props: any) => (
+  <div style={{
+    borderLeft: `4px solid ${blockquoteStyles.danger.borderColor}`,
+    backgroundColor: blockquoteStyles.danger.backgroundColor,
+    padding: '12px 16px',
+    borderRadius: '0 8px 8px 0',
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'start'
+  }}>
+    <span style={{fontSize: '1.5em'}}>{blockquoteStyles.danger.emoji}</span>
+    <div style={{flex: 1}}>{props.children}</div>
+  </div>
+)
+
+const AnnouncementStyle = (props: any) => (
+  <div style={{
+    borderLeft: `4px solid ${blockquoteStyles.announcement.borderColor}`,
+    backgroundColor: blockquoteStyles.announcement.backgroundColor,
+    padding: '12px 16px',
+    borderRadius: '0 8px 8px 0',
+    display: 'flex',
+    gap: '12px',
+    alignItems: 'start'
+  }}>
+    <span style={{fontSize: '1.5em'}}>{blockquoteStyles.announcement.emoji}</span>
+    <div style={{flex: 1}}>{props.children}</div>
+  </div>
+)
 
 /**
  * This is the schema definition for the rich text fields used for
@@ -37,6 +99,10 @@ export default defineType({
         {title: 'H3', value: 'h3'},
         {title: 'H4', value: 'h4'},
         {title: 'Quote', value: 'blockquote'},
+        {title: 'Pushpin (Highlighted Fact)', value: 'pushpin', component: PushpinStyle},
+        {title: 'Warning (General Caution)', value: 'warning', component: WarningStyle},
+        {title: 'Danger (Do Not / Unsafe)', value: 'danger', component: DangerStyle},
+        {title: 'Announcement', value: 'announcement', component: AnnouncementStyle},
       ],
       lists: [
         {title: 'Bullet', value: 'bullet'},
