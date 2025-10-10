@@ -57,6 +57,17 @@ export const postType = defineType({
       validation: Rule => Rule.required()
     }),
     
+    
+    // ===== CITATIONS & REFERENCES =====
+    defineField({
+      name: 'references',
+      title: 'References / Citations',
+      type: 'array',
+      group: 'content',
+      of: [{type: 'citation'}],
+      description: '📝 Citations are numbered by their position in the list: Top citation = [1], Second = [2], Third = [3], etc. Count from top to bottom to find the citation number for in-text references.'
+    }),
+    
     // ===== ENHANCED MEDIA FIELDS =====
     defineField({
       name: 'coverImage',
@@ -179,6 +190,7 @@ export const postType = defineType({
       readOnly: true
     }),
     
+
     // ===== E-E-A-T SIGNALS =====
     defineField({
       name: 'medicallyReviewed',

@@ -169,6 +169,23 @@ export default defineType({
               },
             ],
           },
+
+          {
+            name: 'citation',
+            type: 'object',
+            title: 'Citation',
+            icon: () => '[1]',
+            description: 'Reference to a citation in this post\'s references list',
+            fields: [
+              {
+                name: 'citationIndex',
+                type: 'number',
+                title: 'Citation Number',
+                description: 'Which citation from the references list (1, 2, 3...)',
+                validation: (Rule) => Rule.required().integer().min(1),
+              }
+            ],
+          },
         ],
       },
     }),
@@ -256,6 +273,12 @@ export default defineType({
       type: 'youtube',
       name: 'youtubeEmbed',
       title: 'YouTube Video',
+    }),
+    // Table
+    defineArrayMember({
+      type: 'table',
+      name: 'table',
+      title: 'Table',
     }),
   ],
 })
