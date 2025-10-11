@@ -2,6 +2,7 @@ import {authorType} from './authorType'
 import {categoryType} from './categoryType'
 import {postType} from './postType'
 import {organizationType} from './organizationType'
+import {siteSettingsType} from './siteSettingsType'
 import blockContent from './blockContent'
 import {youtubeType} from './youtubeType'
 import {infographicType} from './infographicType'
@@ -18,6 +19,7 @@ export const schemaTypes = [
   categoryType,
   postType,
   organizationType,
+  siteSettingsType,
   // Object types (used within documents)
   blockContent,
   youtubeType,

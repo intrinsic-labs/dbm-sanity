@@ -20,8 +20,12 @@ export default defineConfig({
           .title('Content')
           .items([
             S.listItem()
+              .title('Site Settings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+            S.listItem()
               .title('Organization')
               .child(S.document().schemaType('organization').documentId('organization')),
+            S.divider(),
             S.listItem()
               .title('Blog Posts')
               .child(
