@@ -23,6 +23,9 @@ export default defineConfig({
               .title('Site Settings')
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
             S.listItem()
+              .title('Blog Page Settings')
+              .child(S.document().schemaType('blogPageSettings').documentId('blogPageSettings')),
+            S.listItem()
               .title('Organization')
               .child(S.document().schemaType('organization').documentId('organization')),
             S.divider(),
@@ -46,6 +49,14 @@ export default defineConfig({
             S.listItem()
               .title('Infographics')
               .child(S.documentTypeList('infographic')),
+            S.divider(),
+            S.listItem()
+              .title('Legal Pages')
+              .child(
+                S.documentList()
+                  .title('Legal Pages (English)')
+                  .filter('_type == "legalPage" && language == "en"')
+              ),
           ])
     }),
     visionTool(),
@@ -63,7 +74,7 @@ export default defineConfig({
         {id: 'es', title: 'Spanish'},
         {id: 'it', title: 'Italian'}
       ],
-      schemaTypes: ['post'],
+      schemaTypes: ['post', 'legalPage'],
       languageField: 'language'
     })
   ],
