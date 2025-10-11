@@ -11,6 +11,10 @@ export const siteSettingsType = defineType({
       default: true
     },
     {
+      name: 'blogCta',
+      title: 'Blog CTA'
+    },
+    {
       name: 'social',
       title: 'Social Media'
     },
@@ -66,6 +70,37 @@ export const siteSettingsType = defineType({
           title: 'Error Message',
           type: 'internationalizedArrayString',
           description: 'Message shown when signup fails'
+        }
+      ]
+    }),
+
+    // ===== BLOG CTA SETTINGS =====
+    defineField({
+      name: 'blogCta',
+      title: 'Blog Call-to-Action',
+      type: 'object',
+      group: 'blogCta',
+      fields: [
+        {
+          name: 'heading',
+          title: 'Heading',
+          type: 'internationalizedArrayString',
+          description: 'Main heading for the blog CTA',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'subheading',
+          title: 'Subheading',
+          type: 'internationalizedArrayString',
+          description: 'Subheading text for the blog CTA',
+          validation: Rule => Rule.required()
+        },
+        {
+          name: 'buttonText',
+          title: 'Button Text',
+          type: 'internationalizedArrayString',
+          description: 'Text for the button (e.g., "Visit Blog")',
+          validation: Rule => Rule.required()
         }
       ]
     }),

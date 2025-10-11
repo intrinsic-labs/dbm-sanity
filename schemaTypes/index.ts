@@ -3,6 +3,7 @@ import {categoryType} from './categoryType'
 import {postType} from './postType'
 import {organizationType} from './organizationType'
 import {siteSettingsType} from './siteSettingsType'
+import {homePageSettingsType} from './homePageSettingsType'
 import {blogPageSettingsType} from './blogPageSettingsType'
 import {legalPageType} from './legalPageType'
 import blockContent from './blockContent'
@@ -22,6 +23,7 @@ export const schemaTypes = [
   postType,
   organizationType,
   siteSettingsType,
+  homePageSettingsType,
   blogPageSettingsType,
   legalPageType,
   // Object types (used within documents)
