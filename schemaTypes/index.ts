@@ -3,14 +3,14 @@ import {categoryType} from './categoryType'
 import {postType} from './postType'
 import {organizationType} from './organizationType'
 import {siteSettingsType} from './siteSettingsType'
-import {homePageSettingsType} from './homePageSettingsType'
+import {landingPageSettingsType} from './landingPageSettingsType'
 import {blogPageSettingsType} from './blogPageSettingsType'
 import {legalPageType} from './legalPageType'
 import blockContent from './blockContent'
 import {youtubeType} from './youtubeType'
 import {infographicType} from './infographicType'
 import {citationType} from './citationType'
-import tableType from './tableType.tsx'
+import tableType from './tableType'
 
 // You will likely need schemas for 'post', 'author', 'category', etc. for the blog later.
 // Import them here when created.
@@ -23,7 +23,7 @@ export const schemaTypes = [
   postType,
   organizationType,
   siteSettingsType,
-  homePageSettingsType,
+  landingPageSettingsType,
   blogPageSettingsType,
   legalPageType,
   // Object types (used within documents)

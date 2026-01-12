@@ -1607,7 +1607,7 @@
     }
   },
   {
-    "name": "homePageSettings",
+    "name": "landingPageSettings",
     "type": "document",
     "attributes": {
       "_id": {
@@ -1620,7 +1620,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "homePageSettings"
+          "value": "landingPageSettings"
         }
       },
       "_createdAt": {

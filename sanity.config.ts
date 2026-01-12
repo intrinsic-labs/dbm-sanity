@@ -23,8 +23,8 @@ export default defineConfig({
               .title('Site Settings')
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
             S.listItem()
-              .title('Home Page Settings')
-              .child(S.document().schemaType('homePageSettings').documentId('homePageSettings')),
+              .title('Landing Page Settings')
+              .child(S.document().schemaType('landingPageSettings').documentId('landingPageSettings')),
             S.listItem()
               .title('Blog Page Settings')
               .child(S.document().schemaType('blogPageSettings').documentId('blogPageSettings')),
