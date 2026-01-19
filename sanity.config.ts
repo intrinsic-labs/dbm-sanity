@@ -24,7 +24,11 @@ export default defineConfig({
               .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
             S.listItem()
               .title('Landing Page Settings')
-              .child(S.document().schemaType('landingPageSettings').documentId('landingPageSettings')),
+              .child(
+                S.documentList()
+                  .title('Landing Page Settings (English)')
+                  .filter('_type == "landingPageSettings" && language == "en"'),
+              ),
             S.listItem()
               .title('Blog Page Settings')
               .child(S.document().schemaType('blogPageSettings').documentId('blogPageSettings')),
@@ -37,36 +41,28 @@ export default defineConfig({
               .child(
                 S.documentList()
                   .title('Blog Posts (English)')
-                  .filter('_type == "post" && language == "en"')
+                  .filter('_type == "post" && language == "en"'),
               ),
-            S.listItem()
-              .title('Authors')
-              .child(S.documentTypeList('author')),
-            S.listItem()
-              .title('Categories')
-              .child(S.documentTypeList('category')),
+            S.listItem().title('Authors').child(S.documentTypeList('author')),
+            S.listItem().title('Categories').child(S.documentTypeList('category')),
             S.divider(),
-            S.listItem()
-              .title('All Posts (All Languages)')
-              .child(S.documentTypeList('post')),
-            S.listItem()
-              .title('Infographics')
-              .child(S.documentTypeList('infographic')),
+            S.listItem().title('All Posts (All Languages)').child(S.documentTypeList('post')),
+            S.listItem().title('Infographics').child(S.documentTypeList('infographic')),
             S.divider(),
             S.listItem()
               .title('Legal Pages')
               .child(
                 S.documentList()
                   .title('Legal Pages (English)')
-                  .filter('_type == "legalPage" && language == "en"')
+                  .filter('_type == "legalPage" && language == "en"'),
               ),
-          ])
+          ]),
     }),
     visionTool(),
     internationalizedArray({
       languages: supportedLanguages,
-      defaultLanguages: [supportedLanguages.find(l => l.isDefault)?.id || 'en'],
-      fieldTypes: ['string', 'text', 'slug']
+      defaultLanguages: [supportedLanguages.find((l) => l.isDefault)?.id || 'en'],
+      fieldTypes: ['string', 'text', 'slug'],
     }),
     documentInternationalization({
       supportedLanguages: [
@@ -75,11 +71,11 @@ export default defineConfig({
         {id: 'de', title: 'German'},
         {id: 'fr', title: 'French'},
         {id: 'es', title: 'Spanish'},
-        {id: 'it', title: 'Italian'}
+        {id: 'it', title: 'Italian'},
       ],
-      schemaTypes: ['post', 'legalPage'],
-      languageField: 'language'
-    })
+      schemaTypes: ['post', 'legalPage', 'landingPageSettings'],
+      languageField: 'language',
+    }),
   ],
 
   schema: {

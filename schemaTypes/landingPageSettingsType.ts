@@ -8,14 +8,14 @@ export const landingPageSettingsType = defineType({
     defineField({
       name: 'title',
       title: 'Page Title',
-      type: 'internationalizedArrayString',
+      type: 'string',
       description: 'Main title displayed at the top of the landing page',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'subtitle',
       title: 'Page Subtitle',
-      type: 'internationalizedArrayString',
+      type: 'string',
       description: 'Subtitle or description displayed below the title',
       validation: (Rule) => Rule.required(),
     }),
@@ -30,11 +30,30 @@ export const landingPageSettingsType = defineType({
           scheme: ['http', 'https'],
         }),
     }),
+    defineField({
+      name: 'content',
+      title: 'Page Content',
+      type: 'blockContent',
+      description: 'Rich text content displayed after the video and before the blog CTA',
+    }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
   preview: {
-    prepare() {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle',
+      language: 'language',
+    },
+    prepare({title, subtitle, language}) {
       return {
-        title: 'Landing Page Settings',
+        title: `Landing Page ${language ? `(${language.toUpperCase()})` : ''}`,
+        subtitle: title || subtitle,
       }
     },
   },
